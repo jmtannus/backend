@@ -4,17 +4,19 @@ import cors from 'cors';
 const app = express();
 const port = 3000;
 
+app.use(cors(corsOptions));
+
 const corsOptions = {
-  origin: 'http://example.com',
+  origin: '*',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.get('/', cors(corsOptions), (req, res, next) => {
   const json = JSON.stringify({
-    nome: req.query.nome,
-    idade: req.query.idade > 20 ? "sobreviventes!": "Quero café!"
+    nome: req.query.nome.toUpperCase(),
+    idade: req.query.idade >30 ? 'velho d+!' : 'Novinho d+!',
   });
-  res.send(json)
+  res.json(json);
 });
 
 app.listen(port, () => {
